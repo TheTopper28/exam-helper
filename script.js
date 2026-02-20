@@ -16,8 +16,9 @@ const data={
     Chapter4:[
       {q:"What is the fullform of IDE",a:"Integreted Development Environment"},
       {q:"If a line begins from '//' it is a _______",a:"Comment line"}
+      {q:"What are variable?",a:"A variable is a portion of memory used to store data."}
+     
       
-       
        ]
   },
   Science:{
