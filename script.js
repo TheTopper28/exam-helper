@@ -15,7 +15,7 @@ const data={
   Computer:{
     Chapter4:[
       {q:"What is full form of IDE",a:"Integrated Development Environment"},
-      {q:"x^2+5x+6",a:"(x+2)(x+3)"}
+      {q:"A line beginning with '//'is called________",a:"comment line"}
     ],
   Mensuration:[
       {q:"Solve 2x+5=17",a:"x=6"},
