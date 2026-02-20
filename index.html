@@ -12,8 +12,19 @@
     <h1>📘 Exam Revision Portal</h1>
 
     <div class="controls">
-        <select id="subjectSelect"></select>
-        <select id="topicSelect"></select>
+        <div class="select-group">
+            <label>Subject</label>
+            <select id="subjectSelect">
+                <option disabled selected>Choose Subject</option>
+            </select>
+        </div>
+
+        <div class="select-group">
+            <label>Topic</label>
+            <select id="topicSelect" disabled>
+                <option disabled selected>Choose Topic</option>
+            </select>
+        </div>
     </div>
 
     <div id="questionsContainer" class="questions"></div>
