@@ -1,21 +1,65 @@
+```javascript
+// ========================================
+// ✏️ CREATOR SECTION (EDIT QUESTIONS HERE)
 // ========================================
 
+const examData = {
+    "Mathematics": {
+        "Algebra": [
+            {
+                question: "1. Solve: 2x + 5 = 15",
+                options: ["A. 3", "B. 5", "C. 10", "D. 7"],
+                answer: "Correct Answer: B. 5"
+            }
+        ]
+    },
+
+    "Science": {
+        "Physics": [
+            {
+                question: "1. Unit of Force?",
+                options: ["A. Joule", "B. Newton", "C. Watt", "D. Pascal"],
+                answer: "Correct Answer: B. Newton"
+            }
+        ]
+    }
+};
+
+// ========================================
+// 🚫 DO NOT EDIT BELOW
+// ========================================
+
+const subjectSelect = document.getElementById("subjectSelect");
+const topicSelect = document.getElementById("topicSelect");
+const questionsContainer = document.getElementById("questionsContainer");
+
+function loadSubjects() {
+    subjectSelect.innerHTML = '<option disabled selected>Choose Subject</option>';
+
+    Object.keys(examData).forEach(subject => {
+        const option = document.createElement("option");
+        option.value = subject;
+        option.textContent = subject;
+        subjectSelect.appendChild(option);
+    });
+
+    topicSelect.innerHTML = '<option disabled selected>Choose Topic</option>';
+    topicSelect.disabled = true;
+}
+
 function loadTopics() {
-    topicSelect.innerHTML = "";
-
     const selectedSubject = subjectSelect.value;
-    const topics = examData[selectedSubject];
+    topicSelect.disabled = false;
+    topicSelect.innerHTML = '<option disabled selected>Choose Topic</option>';
 
-    Object.keys(topics).forEach((topic, index) => {
+    Object.keys(examData[selectedSubject]).forEach(topic => {
         const option = document.createElement("option");
         option.value = topic;
         option.textContent = topic;
         topicSelect.appendChild(option);
-
-        if (index === 0) topicSelect.value = topic;
     });
 
-    loadQuestions();
+    questionsContainer.innerHTML = "";
 }
 
 function loadQuestions() {
@@ -25,7 +69,7 @@ function loadQuestions() {
     const topic = topicSelect.value;
     const questions = examData[subject][topic];
 
-    questions.forEach((q) => {
+    questions.forEach(q => {
         const box = document.createElement("div");
         box.className = "question-box";
 
@@ -67,3 +111,4 @@ subjectSelect.addEventListener("change", loadTopics);
 topicSelect.addEventListener("change", loadQuestions);
 
 loadSubjects();
+```
