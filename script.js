@@ -16,11 +16,7 @@ const data={
     Chapter4:[
       {q:"What is the fullform of IDE",a:"Integreted Development Environment"},
       {q:"If a line begins from '//' it is a _______",a:"Comment line"}
-      {q:"What are variable?",a:"A variable is a portion of memory used to store data."}
-      {q:"What are constant?",a:"A contant is a sequence of characters that have fixed value."}
-      {q:"Define BODMAS",a:"Brackets Of Division Multiplication Addition and Subtraction."}
-      {q:"Give a example of logical operators",a:" '&&' '||'  '!' "}
-      {q:"What are relational operators",a:"They are operators that show comparison i.e. ==,>=,<= etc."}
+      
        
        ]
   },
