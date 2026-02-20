@@ -1,25 +1,23 @@
-// ===== EDIT YOUR SUBJECTS, TOPICS, QUESTIONS HERE =====
 const data = {
-  "Math": {
-    "Algebra": [
+  Math: {
+    Algebra: [
       { q: "Solve: 2x + 3 = 7", a: "x = 2" },
       { q: "Value of x: x/2 = 5", a: "x = 10" }
     ],
-    "Mensuration": [
+    Mensuration: [
       { q: "Area of square with side 4?", a: "16" }
     ]
   },
 
-  "Science": {
-    "Physics": [
+  Science: {
+    Physics: [
       { q: "Unit of force?", a: "Newton" }
     ],
-    "Biology": [
+    Biology: [
       { q: "Basic unit of life?", a: "Cell" }
     ]
   }
 };
-// ======================================================
 
 const subjectSelect = document.getElementById("subjectSelect");
 const topicSelect = document.getElementById("topicSelect");
@@ -27,50 +25,57 @@ const container = document.getElementById("questionsContainer");
 
 function loadSubjects() {
   subjectSelect.innerHTML = "";
-  for (let subject in data) {
-    let opt = document.createElement("option");
+  Object.keys(data).forEach(subject => {
+    const opt = document.createElement("option");
     opt.value = subject;
     opt.textContent = subject;
     subjectSelect.appendChild(opt);
-  }
+  });
   loadTopics();
 }
 
 function loadTopics() {
   topicSelect.innerHTML = "";
-  let subject = subjectSelect.value;
-  for (let topic in data[subject]) {
-    let opt = document.createElement("option");
+  const subject = subjectSelect.value;
+  Object.keys(data[subject]).forEach(topic => {
+    const opt = document.createElement("option");
     opt.value = topic;
     opt.textContent = topic;
     topicSelect.appendChild(opt);
-  }
+  });
   loadQuestions();
 }
 
 function loadQuestions() {
   container.innerHTML = "";
-  let subject = subjectSelect.value;
-  let topic = topicSelect.value;
-  let questions = data[subject][topic];
+  const subject = subjectSelect.value;
+  const topic = topicSelect.value;
+  const questions = data[subject][topic];
 
   questions.forEach((item, index) => {
-    let card = document.createElement("div");
+    const card = document.createElement("div");
     card.className = "card";
 
-    card.innerHTML = `
-      <div class="question">${index + 1}. ${item.q}</div>
-      <button onclick="toggleAnswer(${index})">Show Answer</button>
-      <div class="answer" id="ans${index}">${item.a}</div>
-    `;
+    const q = document.createElement("div");
+    q.className = "question";
+    q.textContent = `${index + 1}. ${item.q}`;
 
+    const btn = document.createElement("button");
+    btn.textContent = "Show Answer";
+
+    const ans = document.createElement("div");
+    ans.className = "answer";
+    ans.textContent = item.a;
+
+    btn.addEventListener("click", () => {
+      ans.style.display = ans.style.display === "block" ? "none" : "block";
+    });
+
+    card.appendChild(q);
+    card.appendChild(btn);
+    card.appendChild(ans);
     container.appendChild(card);
   });
-}
-
-function toggleAnswer(i) {
-  let ans = document.getElementById("ans" + i);
-  ans.style.display = ans.style.display === "block" ? "none" : "block";
 }
 
 subjectSelect.addEventListener("change", loadTopics);
