@@ -1,4 +1,3 @@
-
 // ========================================
 // ✏️ CREATOR SECTION (EDIT QUESTIONS HERE)
 // ========================================
@@ -12,8 +11,7 @@ const examData = {
                 answer: "Correct Answer: B. 5"
             }
         ]
-     
-     },
+    },
 
     "Science": {
         "Physics": [
@@ -112,4 +110,3 @@ subjectSelect.addEventListener("change", loadTopics);
 topicSelect.addEventListener("change", loadQuestions);
 
 loadSubjects();
-
