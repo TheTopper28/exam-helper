@@ -1,107 +1,73 @@
-// ===== EDIT YOUR SUBJECTS / QUESTIONS / ANSWERS HERE =====
-const data = {
-  Mathematics: {
-    Algebra: [
-      { q: "Solve: 2x + 5 = 17", a: "x = 6" },
-      { q: "Factorise: x² + 5x + 6", a: "(x+2)(x+3)" }
-    ],
-    Mensuration: [
-      { q: "Area of circle radius 7 cm", a: "154 cm²" }
+// redirect if not logged
+const currentUser=localStorage.getItem("rev_current_user");
+if(!currentUser){location.href="login.html";}
+
+// show user
+document.getElementById("userName").textContent="👋 "+currentUser;
+
+document.getElementById("logoutBtn").onclick=()=>{
+  localStorage.removeItem("rev_current_user");
+  location.href="login.html";
+};
+
+// ===== DATA =====
+const data={
+  Mathematics:{
+    Algebra:[
+      {q:"Solve 2x+5=17",a:"x=6"},
+      {q:"x^2+5x+6",a:"(x+2)(x+3)"}
     ]
   },
-
-  Science: {
-    Physics: [
-      { q: "Define velocity", a: "Speed with direction" }
+  Science:{
+    Physics:[
+      {q:"Define velocity",a:"Speed with direction"}
     ]
   }
 };
 
-// ===== USER SIGN-IN =====
-const usernameInput = document.getElementById("usernameInput");
-const saveUser = document.getElementById("saveUser");
-const welcomeUser = document.getElementById("welcomeUser");
+const subjectSelect=document.getElementById("subjectSelect");
+const topicSelect=document.getElementById("topicSelect");
+const questionArea=document.getElementById("questionArea");
 
-function initUser() {
-  const stored = localStorage.getItem("rev_user");
-  if (stored) {
-    usernameInput.style.display = "none";
-    saveUser.style.display = "none";
-    welcomeUser.textContent = "👋 " + stored;
-  }
-}
-
-saveUser.onclick = () => {
-  const name = usernameInput.value.trim();
-  if (!name) return;
-  localStorage.setItem("rev_user", name);
-  usernameInput.style.display = "none";
-  saveUser.style.display = "none";
-  welcomeUser.textContent = "👋 " + name;
-};
-
-// ===== SUBJECT / TOPIC =====
-const subjectSelect = document.getElementById("subjectSelect");
-const topicSelect = document.getElementById("topicSelect");
-const questionArea = document.getElementById("questionArea");
-
-function populateSubjects() {
-  subjectSelect.innerHTML = "";
-  Object.keys(data).forEach(sub => {
-    const opt = document.createElement("option");
-    opt.value = sub;
-    opt.textContent = sub;
-    subjectSelect.appendChild(opt);
+function populateSubjects(){
+  Object.keys(data).forEach(s=>{
+    const o=document.createElement("option");
+    o.value=s;o.textContent=s;
+    subjectSelect.appendChild(o);
   });
   populateTopics();
 }
 
-function populateTopics() {
-  const subject = subjectSelect.value;
-  topicSelect.innerHTML = "";
-
-  Object.keys(data[subject]).forEach(topic => {
-    const opt = document.createElement("option");
-    opt.value = topic;
-    opt.textContent = topic;
-    topicSelect.appendChild(opt);
+function populateTopics(){
+  topicSelect.innerHTML="";
+  Object.keys(data[subjectSelect.value]).forEach(t=>{
+    const o=document.createElement("option");
+    o.value=t;o.textContent=t;
+    topicSelect.appendChild(o);
   });
-
   showQuestions();
 }
 
-function showQuestions() {
-  const subject = subjectSelect.value;
-  const topic = topicSelect.value;
-  const questions = data[subject][topic];
-
-  questionArea.innerHTML = "";
-
-  questions.forEach((item, i) => {
-    const card = document.createElement("div");
-    card.className = "question-card";
-
-    card.innerHTML = `
-      <div class="question-number">Question ${i + 1}</div>
-      <div>${item.q}</div>
+function showQuestions(){
+  questionArea.innerHTML="";
+  const list=data[subjectSelect.value][topicSelect.value];
+  list.forEach((it,i)=>{
+    const card=document.createElement("div");
+    card.className="question-card";
+    card.innerHTML=`
+      <div>Q${i+1}. ${it.q}</div>
       <button class="show-btn">Show Answer</button>
-      <div class="answer">${item.a}</div>
+      <div class="answer">${it.a}</div>
     `;
-
-    const btn = card.querySelector(".show-btn");
-    const ans = card.querySelector(".answer");
-
-    btn.onclick = () => {
-      ans.style.display = ans.style.display === "block" ? "none" : "block";
+    const b=card.querySelector(".show-btn");
+    const a=card.querySelector(".answer");
+    b.onclick=()=>{
+      a.style.display=a.style.display==="block"?"none":"block";
     };
-
     questionArea.appendChild(card);
   });
 }
 
-subjectSelect.addEventListener("change", populateTopics);
-topicSelect.addEventListener("change", showQuestions);
-
-// INIT
-initUser();
+subjectSelect.onchange=populateTopics;
+topicSelect.onchange=showQuestions;
 populateSubjects();
