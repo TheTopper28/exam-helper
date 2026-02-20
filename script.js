@@ -16,6 +16,7 @@ const data={
     Chapter4:[
       {q:"What is full form of IDE",a:"Integrated Development Environment"},
       {q:"A line beginning with '//' is called________",a:"comment line"}
+      {q:"What is a variable?",a:"A variabel is a named portion of memory used to store data."}
     ],
   Mensuration:[
       {q:"Solve 2x+5=17",a:"x=6"},
