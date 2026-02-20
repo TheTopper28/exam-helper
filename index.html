@@ -1,38 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Revision Practice</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Student Revision</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="app-header">
-    <h1>📘 Revision Practice</h1>
+
+  <header>
+    <h1>📚 Exam Revision Practice</h1>
     <p>Select subject → topic → practice questions</p>
   </header>
 
-  <main class="container">
-    <section class="controls">
-      <div class="select-group">
-        <label for="subjectSelect">Subject</label>
-        <select id="subjectSelect"></select>
-      </div>
+  <div class="controls">
+    <select id="subjectSelect"></select>
+    <select id="topicSelect"></select>
+  </div>
 
-      <div class="select-group">
-        <label for="topicSelect">Topic</label>
-        <select id="topicSelect"></select>
-      </div>
-    </section>
-
-    <section id="questionArea" class="question-area">
-      <p class="placeholder">Choose a subject and topic to start practicing.</p>
-    </section>
-  </main>
-
-  <footer class="app-footer">
-    <p>Made for exam revision ✨</p>
-  </footer>
+  <div id="questionsContainer"></div>
 
   <script src="script.js"></script>
 </body>
