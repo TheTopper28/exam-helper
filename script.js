@@ -12,17 +12,11 @@ document.getElementById("logoutBtn").onclick=()=>{
 
 // ===== DATA =====
 const data={
-  Computer:{
-    Chapter4:[
-      {q:"What is full form of IDE",a:"Integrated Development Environment"},
-      {q:"A line beginning with '//' is called________",a:"comment line"}
-      {q:"What is a variable?",a:"A variabel is a named portion of memory used to store data."}
-    ],
-  Mensuration:[
+  Mathematics:{
+    Algebra:[
       {q:"Solve 2x+5=17",a:"x=6"},
       {q:"x^2+5x+6",a:"(x+2)(x+3)"}
     ]
-    
   },
   Science:{
     Physics:[
@@ -77,4 +71,3 @@ function showQuestions(){
 subjectSelect.onchange=populateTopics;
 topicSelect.onchange=showQuestions;
 populateSubjects();
-
