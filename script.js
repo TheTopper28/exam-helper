@@ -76,3 +76,28 @@ function showQuestions(){
 subjectSelect.onchange=populateTopics;
 topicSelect.onchange=showQuestions;
 populateSubjects();
+const fbBtn = document.getElementById("sendFeedback");
+const fbText = document.getElementById("feedbackText");
+const fbMsg = document.getElementById("feedbackMsg");
+
+fbBtn.onclick = () => {
+  const text = fbText.value.trim();
+  if (!text) {
+    fbMsg.textContent = "⚠️ Please write something";
+    return;
+  }
+
+  const allFeedback =
+    JSON.parse(localStorage.getItem("rev_feedback") || "[]");
+
+  allFeedback.push({
+    user: currentUser,
+    message: text,
+    time: new Date().toLocaleString()
+  });
+
+  localStorage.setItem("rev_feedback", JSON.stringify(allFeedback));
+
+  fbText.value = "";
+  fbMsg.textContent = "✅ Feedback sent!";
+};
