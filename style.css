@@ -28,7 +28,7 @@ body{
 .app-header h1{
   font-size:2rem;
   letter-spacing:.5px;
-    background: linear-gradient(90deg, #f97316, #fb923c, #fbbf24);
+  color: #f1f5f9;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
