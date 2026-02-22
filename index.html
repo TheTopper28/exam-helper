@@ -1,38 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Revision Practice</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STEM Revision Hub</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header>
+    <h1>🌌 STEM Revision Hub</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="formulas.html">Formulas</a>
+      <a href="tracker.html">Tracker</a>
+    </nav>
+  </header>
 
-<header class="app-header">
-  <div class="user-display">
-    <span id="userName"></span>
-    <button id="logoutBtn">Logout</button>
-  </div>
-
-  <h1>📘 Revision Practice</h1>
-  <p>Select subject → topic → practice</p>
-</header>
-
-<main class="container">
-  <section class="controls">
-    <div>
-      <label>Subject</label>
-      <select id="subjectSelect"></select>
+  <main class="center">
+    <div class="card">
+      <h2>Welcome</h2>
+      <p>Select a section to start revision</p>
+      <div>
+        <a class="btn" href="quiz.html">Start Quiz</a>
+        <a class="btn" href="formulas.html">View Formulas</a>
+        <a class="btn" href="tracker.html">Revision Tracker</a>
+      </div>
     </div>
-    <div>
-      <label>Topic</label>
-      <select id="topicSelect"></select>
-    </div>
-  </section>
+  </main>
 
-  <section id="questionArea" class="question-area"></section>
-</main>
-
-<script src="script.js"></script>
 </body>
 </html>
