@@ -1,104 +1,155 @@
-// Particles Background
-const canvas = document.getElementById("bgCanvas");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-const particles = [];
-for(let i=0;i<100;i++){
-  particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1,dx:(Math.random()-0.5)*0.5,dy:(Math.random()-0.5)*0.5});
-}
-function animateParticles(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle="rgba(88,166,255,0.6)";
-    ctx.fill();
-    p.x+=p.dx; p.y+=p.dy;
-    if(p.x<0||p.x>canvas.width)p.dx*=-1;
-    if(p.y<0||p.y>canvas.height)p.dy*=-1;
-  });
-  requestAnimationFrame(animateParticles);
-}
-animateParticles();
-window.addEventListener("resize",()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+// redirect if not logged
+const currentUser = localStorage.getItem("rev_current_user");
+if (!currentUser) { location.href = "login.html"; }
 
-// Multiplayer & AI Quiz
-let aiQuestions = [
-  {q:"Area of circle?",o:["πr²","2πr","r²","πd"],a:0},
-  {q:"Speed formula?",o:["d/t","t/d","m×a","v×t"],a:0},
-  {q:"Force formula?",o:["F=ma","d/t","F/A","m/v"],a:0},
-  {q:"Density formula?",o:["m/v","v/m","F*d","d/t"],a:0}
-];
-let cur=0,score=0,time=15,timer;
-function loadAIQuestion(){
-  const q=aiQuestions[cur];
-  document.getElementById("question").textContent=q.q;
-  const optDiv = document.getElementById("options");
-  optDiv.innerHTML="";
-  q.o.forEach((t,i)=>{
-    const b=document.createElement("button");
-    b.textContent=t;
-    b.onclick=()=>checkAIAnswer(i);
-    optDiv.appendChild(b);
-  });
-  startTimer();
-}
-function checkAIAnswer(i){
-  if(i===aiQuestions[cur].a) score++;
-  document.getElementById("score").textContent="Score: "+score;
-  nextAIQuestion();
-}
-function nextAIQuestion(){
-  cur=(cur+1)%aiQuestions.length;
-  if(cur===0) saveScore();
-  loadAIQuestion();
-}
-function startTimer(){
-  clearInterval(timer);
-  time=15;
-  const tEl=document.getElementById("timer");
-  timer=setInterval(()=>{
-    if(!tEl) return;
-    tEl.textContent="Time: "+time;
-    time--;
-    if(time<0) nextAIQuestion();
-  },1000);
-}
-function saveScore(){
-  let player=document.getElementById("playerName")?.value || "Player";
-  let board=JSON.parse(localStorage.getItem("board")||"[]");
-  board.push({name:player,score:score});
-  board.sort((a,b)=>b.score-a.score);
-  localStorage.setItem("board",JSON.stringify(board.slice(0,10)));
-}
-function showBoard(){
-  const ul=document.getElementById("board");
-  if(!ul) return;
-  ul.innerHTML="";
-  let b=JSON.parse(localStorage.getItem("board")||"[]");
-  b.forEach(s=>{
-    const li=document.createElement("li");
-    li.textContent=s.name+" - "+s.score;
-    ul.appendChild(li);
-  });
-}
-showBoard();
+// show user
+document.getElementById("userName").textContent = "👋 " + currentUser;
 
-// Theme & Login
-function toggleTheme(){
+document.getElementById("logoutBtn").onclick = () => {
+  localStorage.removeItem("rev_current_user");
+  location.href = "login.html";
+};
+
+// ===== DATA =====
+const data = {
+  Computer: {
+    Chapter4: [
+      { q: "What is the fullform of IDE", a: "Integrated Development Environment" },
+      { q: "If a line begins from '//' it is a _______", a: "Comment line" },
+      { q: "What are variables?", a: "A variable is a portion of memory used to store values." },
+      { q: "What are constants?", a: "A constant is a sequence of characters that have fixed value." },
+      { q: "Define BODMAS", a: "Brackets Of Division Multiplication Addition and Subtraction." },
+      { q: "Give an example of logical operators", a: " '&&' '||'  '!' " },
+      { q: "What are relational operators", a: "They are operators that show comparison i.e. ==,>=,<= etc." }
+    ]
+  },
+  Science: {
+    Biology: [
+      { q: "Differentiate between Cell wall and cell membrane.", a: "Cell wall is present in plant cell only while cell membrane is present in both plant and animal cell.Cell wall is flexible while cell membrane is rigid." },
+      {q:"Write the fuctions of Lysosome,Golgi Bodies and centrosomes.",a:"Accourding to the google and textbook"},
+      {q:"What is the fuction of mitochondria?.",a:"Mitochondria helps in the synthesis of ATP (adenosine triphospahte) which provides energy to the cell"}
+    ]
+  }
+};
+
+const subjectSelect = document.getElementById("subjectSelect");
+const topicSelect = document.getElementById("topicSelect");
+const questionArea = document.getElementById("questionArea");
+
+// ===== THEME TOGGLE =====
+const themeToggle = document.getElementById("themeToggle");
+themeToggle.onclick = () => {
   document.body.classList.toggle("light");
-  localStorage.setItem("theme",document.body.classList.contains("light")?"light":"dark");
+  localStorage.setItem("rev_theme", document.body.classList.contains("light") ? "light" : "dark");
+};
+if (localStorage.getItem("rev_theme") === "light") {
+  document.body.classList.add("light");
 }
-(function(){if(localStorage.getItem("theme")==="light")document.body.classList.add("light");})();
-function login(){
-  const n=document.getElementById("name")?.value.trim();
-  if(!n) return;
-  localStorage.setItem("user",n);
-  location.href="index.html";
+
+// ===== QUIZ MODE =====
+let quizMode = false;
+let currentIndex = 0;
+const quizToggle = document.getElementById("quizToggle");
+quizToggle.onclick = () => {
+  quizMode = !quizMode;
+  quizToggle.textContent = quizMode ? "Practice Mode" : "Quiz Mode";
+  currentIndex = 0;
+  showQuestions();
+};
+
+// ===== POPULATE SUBJECTS =====
+function populateSubjects() {
+  subjectSelect.innerHTML = "";
+  Object.keys(data).forEach(s => {
+    const o = document.createElement("option");
+    o.value = s; o.textContent = s;
+    subjectSelect.appendChild(o);
+  });
+  populateTopics();
 }
-(function(){
-  const w=document.getElementById("welcome");
-  if(w && localStorage.getItem("user")) w.textContent="Welcome "+localStorage.getItem("user");
-})();
-loadAIQuestion();
+
+// ===== POPULATE TOPICS =====
+function populateTopics() {
+  topicSelect.innerHTML = "";
+  Object.keys(data[subjectSelect.value]).forEach(t => {
+    const o = document.createElement("option");
+    o.value = t; o.textContent = t;
+    topicSelect.appendChild(o);
+  });
+  showQuestions();
+}
+
+// ===== SHOW QUESTIONS =====
+function showQuestions() {
+  questionArea.innerHTML = "";
+  const list = data[subjectSelect.value][topicSelect.value];
+
+  if (quizMode) {
+    // Quiz Mode: one question at a time
+    const it = list[currentIndex];
+    const card = document.createElement("div");
+    card.className = "question-card quiz-mode fade";
+    card.innerHTML = `
+      <div class="quiz-question">Q${currentIndex + 1}. ${it.q}</div>
+      <button class="show-btn">Show Answer</button>
+      <div class="answer quiz-answer">${it.a}</div>
+      <div class="nav-buttons">
+        <button id="prevBtn" class="show-btn">Previous</button>
+        <button id="nextBtn" class="show-btn">Next</button>
+      </div>
+      <div class="progress">Question ${currentIndex + 1} of ${list.length}</div>
+    `;
+    const b = card.querySelector(".show-btn");
+    const a = card.querySelector(".quiz-answer");
+    b.onclick = () => {
+      a.style.display = a.style.display === "block" ? "none" : "block";
+    };
+    questionArea.appendChild(card);
+
+    // Navigation
+    document.getElementById("prevBtn").onclick = () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        transitionQuestion();
+      }
+    };
+    document.getElementById("nextBtn").onclick = () => {
+      if (currentIndex < list.length - 1) {
+        currentIndex++;
+        transitionQuestion();
+      }
+    };
+
+  } else {
+    // Practice Mode: all questions at once
+    list.forEach((it, i) => {
+      const card = document.createElement("div");
+      card.className = "question-card";
+      card.innerHTML = `
+        <div>Q${i + 1}. ${it.q}</div>
+        <button class="show-btn">Show Answer</button>
+        <div class="answer">${it.a}</div>
+      `;
+      const b = card.querySelector(".show-btn");
+      const a = card.querySelector(".answer");
+      b.onclick = () => {
+        a.style.display = a.style.display === "block" ? "none" : "block";
+      };
+      questionArea.appendChild(card);
+    });
+  }
+}
+
+// Smooth transition when switching questions
+function transitionQuestion() {
+  questionArea.classList.add("fade-out");
+  setTimeout(() => {
+    showQuestions();
+    questionArea.classList.remove("fade-out");
+  }, 300);
+}
+
+// ===== EVENT BINDINGS =====
+subjectSelect.onchange = populateTopics;
+topicSelect.onchange = showQuestions;
+populateSubjects();
