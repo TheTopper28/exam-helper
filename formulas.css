@@ -1,0 +1,86 @@
+:root{
+  --bg:#020617;
+  --panel:#0f172a;
+  --panel2:#1e293b;
+  --accent:#6366f1;
+  --accent2:#ec4899;
+  --accent3:#22d3ee;
+  --text:#e5e7eb;
+}
+
+body{
+  margin:0;
+  font-family:system-ui,Arial;
+  background:radial-gradient(circle at top,#0f172a,#020617 70%);
+  color:var(--text);
+}
+
+.app-header{
+  text-align:center;
+  padding:34px 16px 16px;
+  background: linear-gradient(90deg, #6366f1, #06b6d4);
+  position:relative;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+
+.app-header h1{
+  font-size:2rem;
+  letter-spacing:.5px;
+  background:white;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.user-display{
+  position:absolute;
+  top:14px;
+  left:18px;
+}
+
+#backBtn{
+  border:none;
+  padding:6px 12px;
+  border-radius:8px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:white;
+  cursor:pointer;
+  font-size:.85rem;
+  transition:.2s;
+}
+
+#backBtn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(99,102,241,.4);
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:26px 20px;
+}
+
+.formula-group{
+  margin-bottom:28px;
+}
+
+.formula-group h2{
+  margin-bottom:10px;
+  color:#a5b4fc;
+}
+
+.formula-card{
+  background:linear-gradient(135deg,rgba(30,41,59,.9),rgba(15,23,42,.9));
+  padding:14px 16px;
+  border-radius:12px;
+  margin-bottom:10px;
+  border:1px solid rgba(255,255,255,0.05);
+  font-size:1.05rem;
+  transition:.25s;
+}
+
+.formula-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px rgba(0,0,0,.35);
+  border-color:rgba(99,102,241,.4);
+}
