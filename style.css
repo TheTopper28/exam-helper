@@ -314,3 +314,14 @@ body.light .answer {
     width:100%;
   }
 }
+/* Smooth quiz card animation */
+.quiz-card {
+  transform: translateY(25px);
+  opacity: 0;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.quiz-card.show {
+  transform: translateY(0);
+  opacity: 1;
+}
