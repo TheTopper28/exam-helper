@@ -41,9 +41,11 @@
 <script src="script.js"></script>
 
 <script>
-document.getElementById("formulaBtn").onclick = () => {
-  location.href = "formulas.html";
-};
+const formulaBtn = document.getElementById("formulaBtn");
+formulaBtn.onclick = () => location.href = "formulas.html";
+
+/* ensure not glowing on home */
+formulaBtn.classList.remove("active-btn");
 </script>
 
 </body>
