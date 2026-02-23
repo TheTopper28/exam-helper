@@ -47,7 +47,7 @@ body{
   backdrop-filter:blur(6px);
 }
 
-#logoutBtn, #themeToggle, #quizToggle{
+#logoutBtn, #themeToggle, #quizToggle, #formulaBtn{
   border:none;
   padding:6px 12px;
   border-radius:8px;
@@ -57,8 +57,7 @@ body{
   font-size:.8rem;
   transition:.2s;
 }
-
-#logoutBtn:hover, #themeToggle:hover, #quizToggle:hover{
+#logoutBtn:hover, #themeToggle:hover, #quizToggle:hover, #formulaBtn:hover{
   transform:translateY(-1px);
   box-shadow:0 4px 12px rgba(99,102,241,.4);
 }
