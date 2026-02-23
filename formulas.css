@@ -84,3 +84,39 @@ body{
   box-shadow:0 10px 25px rgba(0,0,0,.35);
   border-color:rgba(99,102,241,.4);
 }
+/* =====================
+   MOBILE RESPONSIVE
+   ===================== */
+@media (max-width:768px){
+
+  .app-header{
+    padding:24px 10px 12px;
+  }
+
+  .app-header h1{
+    font-size:1.5rem;
+  }
+
+  /* Header buttons centered */
+  .user-display{
+    position:static;
+    margin-bottom:10px;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  #homeBtn, #formulaBtn{
+    width:100%;
+  }
+
+  .container{
+    padding:18px 12px;
+  }
+
+  .formula-card{
+    font-size:1rem;
+    padding:12px;
+  }
+}
