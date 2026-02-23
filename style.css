@@ -245,3 +245,10 @@ body.light .answer {
   color: #94a3b8;
   text-align: center;
 }
+/* Active glowing header button */
+.active-btn{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 0 10px rgba(99,102,241,.7),
+             0 0 18px rgba(236,72,153,.5);
+  transform:translateY(-1px) scale(1.04);
+}
