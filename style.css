@@ -314,14 +314,20 @@ body.light .answer {
     width:100%;
   }
 }
-/* Smooth quiz card animation */
+/* Ultra smooth quiz animation */
 .quiz-card {
-  transform: translateY(25px);
+  transform: translateY(40px) scale(0.97);
   opacity: 0;
-  transition: transform 0.35s ease, opacity 0.35s ease;
+  filter: blur(6px);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease,
+    filter 0.45s ease;
+  will-change: transform, opacity, filter;
 }
 
 .quiz-card.show {
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
   opacity: 1;
+  filter: blur(0);
 }
